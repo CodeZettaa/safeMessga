@@ -3,7 +3,7 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import type { Category } from '@/types/database';
 
 export async function listActiveCategories(): Promise<Category[]> {
-  const supabase = (await createServerSupabaseClient()) ?? createServiceClient();
+  const supabase = createServiceClient() ?? (await createServerSupabaseClient());
   if (!supabase) return [];
 
   const { data, error } = await supabase
@@ -12,8 +12,12 @@ export async function listActiveCategories(): Promise<Category[]> {
     .eq('is_active', true)
     .order('sort_order', { ascending: true });
 
-  if (error || !data) return [];
-  return data as Category[];
+  if (error) {
+    console.error('Failed to load categories', error.message);
+    return [];
+  }
+
+  return (data ?? []) as Category[];
 }
 
 export async function getDefaultCategoryId(): Promise<string | null> {

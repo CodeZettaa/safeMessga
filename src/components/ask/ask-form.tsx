@@ -13,7 +13,13 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import type { Category } from '@/types/database';
 
-export function AskForm({ categories }: { categories: Category[] }) {
+export function AskForm({
+  categories,
+  databaseReady = true,
+}: {
+  categories: Category[];
+  databaseReady?: boolean;
+}) {
   const { locale, messages } = useI18n();
   const [started, setStarted] = useState(false);
   const [categoryId, setCategoryId] = useState('');
@@ -98,7 +104,7 @@ export function AskForm({ categories }: { categories: Category[] }) {
   if (categories.length === 0) {
     return (
       <p className="rounded-3xl border border-dashed p-8 text-center text-muted-foreground">
-        {messages.ask.noCategories}
+        {databaseReady ? messages.ask.noCategories : messages.ask.databaseUnavailable}
       </p>
     );
   }

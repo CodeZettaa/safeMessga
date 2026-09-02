@@ -59,7 +59,9 @@ export const en: Messages = {
     blocked: 'Sending is temporarily paused after repeated rejected attempts.',
     duplicate: 'This message was already sent recently.',
     unavailable: 'The service is not ready yet. If you are the developer, check the environment setup.',
-    noCategories: 'No categories are available right now.',
+    noCategories: 'No categories yet. Add them in the admin dashboard, or run supabase/seed.sql in the production Supabase project.',
+    databaseUnavailable:
+      'The live site is not connected to the database yet. Add the Supabase environment variables in Vercel and redeploy.',
     checkFields: 'Please review the required fields',
     categoryUnavailable: 'This category is not available',
   },

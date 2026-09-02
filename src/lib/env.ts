@@ -26,10 +26,14 @@ export function resolveSiteUrl() {
 
 const optionalString = z.string().optional().transform((value) => blankToUndefined(value));
 
+function supabaseUrlFromEnv() {
+  return asUrl(process.env.NEXT_PUBLIC_SUPABASE_URL) ?? asUrl(process.env.SUPABASE_URL);
+}
+
 export function getPublicEnv() {
   return {
     siteUrl: resolveSiteUrl(),
-    supabaseUrl: asUrl(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    supabaseUrl: supabaseUrlFromEnv(),
     supabaseAnonKey: blankToUndefined(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
     turnstileSiteKey: optionalString.parse(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY),
   };
