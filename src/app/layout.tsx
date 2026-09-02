@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Cairo, Geist_Mono } from 'next/font/google';
 import { siteConfig } from '@/lib/config';
+import { resolveSiteUrl } from '@/lib/env';
 import { getMessages, htmlLang } from '@/lib/i18n';
 import { ThemeProvider } from '@/components/theme-provider';
 import { I18nProvider } from '@/components/i18n-provider';
@@ -19,8 +20,10 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
 });
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(resolveSiteUrl()),
   title: {
     default: siteConfig.name,
     template: siteConfig.seo.titleTemplate,
